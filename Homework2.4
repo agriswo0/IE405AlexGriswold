@@ -1,0 +1,30 @@
+#include <iostream>
+#include <cmath>
+
+int digits(int number)
+{
+    int digits = 0;
+    while (number) {
+        number /= 10;
+        digits++;
+    }
+    return digits;
+}
+
+int main()
+{
+    int val;
+    std::cout<<"Enter an integer: ";
+    std::cin>>val;
+    
+    int sum=0;
+    int prod=1;
+    
+    for(int i=0;i<digits(val);i++){
+        int newVal = val / pow(10,i);
+        newVal = newVal % 10;
+        sum += newVal;
+        prod *= newVal;
+    }
+    std::cout<<"\nSum is "<<sum<<" and Product is "<<prod;
+}
