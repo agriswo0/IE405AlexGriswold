@@ -1,0 +1,43 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+
+int main(){
+    std::ifstream student;
+    std::ifstream correct;
+    
+    correct.open("CorrectAnswers.txt");
+    student.open("StudentAnswers.txt");
+    
+    std::string correctLetters[20] = {};
+    std::string studentLetters[20] = {};
+    
+    for(int i=0;i<20;i++){
+      correct>>correctLetters[i];
+      student>>studentLetters[i];
+    }
+    
+    correct.close();
+    student.close();
+    
+    int count = 0;
+    
+    for(int i=0;i<20;i++){
+      if(correctLetters[i]==studentLetters[i]){
+        count++;
+      }
+    }
+    
+    float percent = count*100/20;
+    
+    std::cout<<"\nQuestions answered correctly: "<<count;
+    std::cout<<"\nPercentage answered correctly: "<<percent;
+    
+    if(percent>=75){
+      std::cout<<"\nStudent has passed.";
+    }
+    else{
+      std::cout<<"\nStudent has failed.";
+    }
+    
+}
