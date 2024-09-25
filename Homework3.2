@@ -1,0 +1,26 @@
+#include <iostream>
+
+void squareNreverse (int num[], int len){
+    for(int i=0;i<len;i++){
+        num[i] = num[i]*num[i];
+    }
+    
+    int sub[len] = {};
+    int c=0;
+    
+    for(int i=len-1;i>=0;i-=1){
+        sub[c] = num[i];
+        c++;
+    }
+    
+    num = sub;
+    
+    for(int i=0;i<len;i++){
+        std::cout<<num[i]<<"\n";
+    }
+}
+
+int main() {
+    int num[] = {10,20,30,50,2};
+    squareNreverse(num,5);
+}
