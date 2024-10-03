@@ -1,0 +1,42 @@
+
+#include <iostream>
+#include <cmath>
+
+int* MergeArrays(int *a, int *b, int sizea, int sizeb){
+    int moor = sizea+sizeb;
+    int *combine = new int[moor];
+    for(int i=0;i<sizea;i++){
+        combine[i] = a[i];
+    }
+    
+    int bplace = 0;
+    for(int i=sizea;i<moor;i++){
+        combine[i] = b[bplace];
+        bplace++;
+    }
+    
+    for(int i=0;i<moor;i++){
+      for(int j=0;j<moor-1;j++) {
+        if(combine[j] > combine[i]){
+                  int temp = combine[i];
+				  combine[i] = combine[j];
+                  combine[j] = temp;	
+                }
+       }
+    }
+    return combine;
+}
+
+
+int main() {
+    int sizea = 3;
+    int sizeb = 2;
+    int a[] = {3,2,1};
+    int b[] = {5,4};
+    
+    int *yes = MergeArrays(a,b,sizea,sizeb);
+    
+    for(int i = 0; i<sizea+sizeb; i++) {
+        std::cout << yes[i] << " ";
+    }
+}
