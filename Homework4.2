@@ -1,0 +1,37 @@
+
+#include <iostream>
+#include <cmath>
+
+int digits(int number)
+{
+    return int(log10(number) + 1);
+}
+
+int reverse(int n){
+    int val = n;
+    int d = digits(val);
+    int sub[d]={};
+    
+    for(int i=d-1;i>=0;i--){
+        int newVal = val / pow(10,i);
+        newVal = newVal % 10;
+        sub[i]=newVal;
+    }
+    
+    int a = 0;
+    int place = d+1;
+    for(int i=0;i<d;i++){
+        a = a+(sub[i]*pow(10,place));
+        place--;
+    }
+    return a/100;
+}
+
+
+int main() {
+    int a;
+    std::cout<<"Input: ";
+    std::cin>>a;
+    std::cout<<reverse(a);
+    
+}
