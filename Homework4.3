@@ -1,0 +1,35 @@
+#include <iostream>
+#include <cmath>
+
+
+int main() {
+    int lottery[5]={};
+    int user[5]={};
+    int counter=0;
+    
+    for(int i=0;i<5;i++){
+        int n = rand()%10;
+        lottery[i] = n;
+        int m;
+        std::cout<<"Enter number "<<i+1<<": ";
+        std::cin>>m;
+        user[i] = m;
+        if(n-m==1 or m-n==1){
+            counter++;
+        }
+    }
+    std::cout<<"lottery array: ";
+    for(int i=0;i<5;i++){
+        std::cout<<lottery[i]<<" ";
+    }
+    std::cout<<"\n";
+    std::cout<<"user array: ";
+    for(int i=0;i<5;i++){
+        std::cout<<user[i]<<" ";
+    }
+    std::cout<<"\n"<<"Close digit count: "<<counter;
+    if(counter==5){
+        std::cout<<"\nBig winner!";
+    }
+    
+}
