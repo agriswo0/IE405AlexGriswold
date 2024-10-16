@@ -1,0 +1,27 @@
+#include <iostream>
+
+int main() {
+    int counter[10] = {0,0,0,0,0,0,0,0,0,0};
+    int n = 0;
+    std::cout<<"Please enter individual digits, enter a double digit number to finish entering:\n";
+    while(n<10){
+        std::cout<<"Enter digit - ";
+        std::cin>>n;
+        counter[n]++;
+    }
+    
+    
+    int max = 0;
+    for(int i;i<10;i++){
+        if(counter[i]>max){
+            max = counter[i];
+        }
+    }
+    
+    std::cout<<"\nOutput: ";
+    for(int j=0;j<10;j++){
+        if(counter[j] == max){
+            std::cout<<j<<" ";
+        }
+    }
+}
