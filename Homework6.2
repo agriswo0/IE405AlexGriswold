@@ -1,0 +1,126 @@
+
+#include <iostream>
+#include <fstream>
+
+using namespace std;
+
+/* freeMan() returns a free man or -1 if there is none.  It assumes that
+   mEngaged[i] contains either the index of woman, man i is currently
+   engaged with, or -1 if he is not engaged with anyone currently. */
+int freeMan(int *mEngaged, int n){
+    for(int i=1; i<=n; i++){
+        if(mEngaged[i] == -1){
+            return i;
+        }
+    }
+    return -1;
+}
+
+/* isBetter() returns true if the woman whose preference list is wList prefers m to m2,
+   otherwise it returns false. */
+bool isBetter(int *wList, int n, int m, int m2){
+    for(int i=1; i<=n; i++){
+        if(wList[i] == m){
+            return true;
+        }
+        if(wList[i] == m2){
+            return false;
+        }
+    }
+    return true; 
+}
+
+/* StableMatching(...) computes a stable matching and returns an array
+   whose i^{th} element contains the woman, man i is matched with. */
+int StableMatching(int **mPrefList, int **wPrefList, int n){
+    int runNumber = 0;
+    int *mEngaged = new int[n+1];  // mEngaged[i] will store the current matched partner of man i+1
+    int *wEngaged = new int[n+1];  // wEngaged[i] will store the current matched partner of woman i+1
+    int *curPos = new int[n+1];  // cPos[i] will store man i+1's highest preferred woman, whom he has not proposed yet.
+    for(int i=1; i<=n; i++){  // Initialization
+        mEngaged[i] = -1;
+        wEngaged[i] = -1;
+        curPos[i] = 1;
+    }
+    int m = freeMan(mEngaged, n);  // obtain a free man if there is one
+    while(m != -1){                // if m is a free man, then m will propose to his highest preferred woman next
+        int w = mPrefList[m][curPos[m]];  // w is the m's highest preferred woman, whom he has not proposed yet.
+        if(wEngaged[w] == -1){   // if w is free then engage them to each other
+            mEngaged[m] = w;
+            wEngaged[w] = m;
+        }
+        else{                      // else check whether w prefers m to her current partner
+             int m2 = wEngaged[w];   // m2 is w's current partner
+             if(isBetter(wPrefList[w], n, m, m2)){   // if isBetter(..) returns true, then w prefers m to m2
+                mEngaged[m2] = -1;      // free m2
+                mEngaged[m] = w;      // engaged w with m
+                wEngaged[w] = m;
+             }
+        }
+        curPos[m]++;    // increment the index to man m's highest preferred woman, whom he has not proposed yet.
+        m = freeMan(mEngaged, n);  // find another free man if there is one.
+        runNumber++;
+    }
+    return runNumber;
+}
+
+int proposals(int n){
+    //Initialize arrays
+    int **mPrefList, **wPrefList;
+    mPrefList = new int *[n+1];
+    wPrefList = new int *[n+1];
+    for(int i=1; i<=n; i++){
+        mPrefList[i] = new int[n+1];
+        wPrefList[i] = new int[n+1];
+    }
+    
+    //Swapping random indicies 1000 times
+    for(int i=0;i<1000;i++){
+        int a = rand()%100;
+        int b = rand()%100;
+        int c = rand()%100;
+        
+        int *m1 = mPrefList[a];
+        int *m2 = mPrefList[b];
+        int *w1 = mPrefList[a];
+        int *w2 = mPrefList[c];
+        
+        mPrefList[a] = m2;
+        mPrefList[b] = m1;
+        mPrefList[a] = w2;
+        mPrefList[c] = w1;
+    }
+    
+    
+    //Fill arrays with numbers 1-100
+    for(int i=0;i<n;i++){
+        int val = 1;
+        for(int j=0;i<n;j++){
+            mPrefList[i][j] = val;
+            wPrefList[i][j] = val;
+            val++;
+        }
+    }
+    
+    //Output returns number of proposals gone through
+    int output = StableMatching(mPrefList, wPrefList, n);
+    return output;
+}
+
+int main(){
+    int total = 0;
+    int max = 0;
+    int min = 10000000;
+    for(int i = 0;i<1000;i++){
+        int output = proposals(100);
+        total+=output;
+        if(output>max){
+            max = output;
+        }
+        if(output<min){
+            min = output;
+        }
+    }
+    int average = total/1000;
+    cout<<average<<" "<<max<<" "<<min;
+}
