@@ -1,0 +1,65 @@
+// Online C++ compiler to run C++ program online
+#include <iostream>
+#include <fstream>
+#include <algorithm>
+#include <vector>
+
+using namespace std;
+
+bool * IntervalScheduling(int *s, int *f, int n){
+    bool *output;
+    output = new bool[n];
+    
+    vector<pair<int, int>> gap(n);
+    
+    for (int i = 0; i < n; ++i) {
+        gap[i] = {f[i], i};
+    }
+
+    sort(gap.begin(),gap.end());
+    output[gap[0].second] = true;
+    int lastF = gap[0].first;
+
+    for (int i = 1; i < n; ++i) {
+        if (s[gap[i].second] >= lastF) {
+            output[gap[i].second] = true;
+            lastF = gap[i].first;
+        }
+    }
+    
+    return output;
+}
+
+int main() {
+    ifstream file1;
+    file1.open("input-scheduling.txt");
+    if (file1.fail()){
+        cout << "problem" << endl;
+    }
+    
+    int n;
+    file1 >> n;
+    int *s;
+    int *f;   
+    s = new int [n];         
+    f = new int [n];
+    for(int i=0; i<n; i++){               
+        for(int j=0; j<=1; j++){
+            if(j==0){
+                file1 >> s[i];
+            }
+            if(j==1){
+                file1 >> f[i];
+            }
+        }
+    }
+    cout << n << endl;
+    file1.close();
+    
+    bool *output = IntervalScheduling(s,f,n);
+    for(int i=0;i<n;i++){
+        if(output[i] == true){
+            std::cout<<s[i]<<" "<<f[i];
+        }
+    }
+}
