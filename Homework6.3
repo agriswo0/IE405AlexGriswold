@@ -18,12 +18,12 @@ bool * IntervalScheduling(int *s, int *f, int n){
 
     sort(gap.begin(),gap.end());
     output[gap[0].second] = true;
-    int lastF = gap[0].first;
+    int last = gap[0].first;
 
-    for (int i = 1; i < n; ++i) {
-        if (s[gap[i].second] >= lastF) {
+    for (int i = 1; i<n; i++) {
+        if (s[gap[i].second] >= last) {
             output[gap[i].second] = true;
-            lastF = gap[i].first;
+            last = gap[i].first;
         }
     }
     
