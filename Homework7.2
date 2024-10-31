@@ -1,0 +1,56 @@
+
+#include <iostream>
+#include <fstream>
+#include <algorithm>
+#include <vector>
+
+using namespace std;
+
+int path(int **G, int val, int n){
+    int turns = 0;
+    return 7;
+}
+
+bool * isBipartite(int **G, int n){
+    for(int i=0;i<n;i++){
+        int val = path(G,i,n);
+        if(val>6){
+            return false
+        }
+        if(val%2!=0){
+            return false
+        }
+    }
+    return true;
+}
+
+int main() {
+    ifstream file1;
+    file1.open("input-scheduling.txt");
+    if (file1.fail()){
+        cout << "problem" << endl;
+    }
+    
+    int n;
+    file1 >> n;
+    int **G;
+    G = new *int [n];         
+    for(int i=0; i<n; i++){
+        int *sub;
+        sub = new int [n];
+        for(int j=0; j<n; j++){
+            file1 >> sub[j];
+        }
+        G[i] = sub;
+    }
+    cout << n << endl;
+    file1.close();
+    
+    bool output = isBipartite(G,n);
+    if(output == false){
+        cout << "Graph is not bipartite";
+    }
+    else{
+        cout<< "Graph is bipartite";
+    }
+}
