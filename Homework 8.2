@@ -1,0 +1,60 @@
+
+#include <iostream>
+#include <fstream>
+#include <algorithm>
+#include <vector>
+
+//Step 2
+int * RodCut(int *p, int n){
+    int *cut;
+    cut = new int [n+1];
+    int *r;
+    r = new int [n+1];
+    
+    for (int i=1; i<=n; i++){
+        int max = -1000000;
+        for(int j = 1; i<=n; j++){
+            if(max < p[j] + r[i-j]){
+                max = p[j] +r[i-j];
+                cut[i] = j;
+            }
+        }
+        r[i] = max;
+    }
+    
+    std::cout<< "Optimal Revenue: " << r[n];
+    
+    return cut;
+}
+
+int main() {
+    //Step 1
+    
+    ////Open File
+    ifstream file1;
+    file1.open("input.txt");
+    if (file1.fail()){
+        cout << "problem" << endl;
+    }
+    
+    ////Read File
+    int n;
+    file1 >> n;
+    int *p;
+    p = new int [n+1];
+    for(int i=1; i<=n; i++){
+        file1 >> p[i];
+    }
+    cout << n << endl;
+    file1.close();
+    
+    //Step 3
+    int *cut;
+    cut = RodCut(p,n);
+    
+    std::cout<<"\nPieces to sell: "
+    while(n>0){
+        std::cout<<cut[n]<<" ";
+        n = n-cut[n];
+    }
+}
