@@ -1,0 +1,61 @@
+// Online C++ compiler to run C++ program online
+#include <iostream>
+#include <fstream>
+
+int Knapsack(int *v, int *w, int j, int cap, int **Sol){
+    if(n==0 or W==0){
+        return 0;
+    }
+    
+    if (w[j] > cap){
+        Sol[j][w[j]] = Knapsack(v, w, j, cap, Sol);
+    }
+    else{
+        Sol[j][w[j]] = max(Knapsack(v, w, j-1, cap, Sol),v[j] + Knapsack(v, w, j-1, cap - w[n], Sol));
+    }
+    
+}
+
+int main() {
+    ifstream file1;
+    file1.open("input.txt");
+    if (file1.fail()){
+        cout << "problem" << endl;
+    }
+    
+    int n;
+    int W;
+    file1 >> n;
+    file1 >> W;
+    int *w;
+    int *v;
+    w = new int [n+1];
+    v = new int [n+1];
+    
+    int **Sol;
+    Sol = new *int [n+1];
+    for (int i=1; i<n+1;i++){
+        int *sub;
+        sub = new int [W+1];
+        Sol[i] = sub;
+    }
+    
+    for(int i=1; i<n+1; i++){
+        for(int j=0; j<=1; j++){
+            if(j==0){
+                file1 >> w[i];
+            }
+            if(j==1){
+                file1 >> v[i];
+            }
+    }
+    file1.close();
+    }
+    
+    std::cout<<"Optimal value: " << Knapsack(v,w,n,W,Sol) << "\n"<< "Items to pick:";
+    for(int i=0;i<n;i++){
+        if (Sol[n][i] != 0){
+            std::cout<<Sol[n][i]
+        }
+    }
+}
