@@ -1,0 +1,23 @@
+
+#include <iostream>
+
+int numOcc(int val, int *a, int first, int last){
+    int count = 0;
+    for(int i=first; i<last ; i++){
+        if(a[i]==val){
+            count++;
+        }
+    }
+    return count;
+}
+
+
+int main() {
+    int vals[] = {1, 2, 2, 2, 2, 2, 2, 5, 5};
+    int * a = vals;
+    
+    std::cout<<numOcc(2,a,0,8)<<std::endl;
+    std::cout<<numOcc(3,a,0,8)<<std::endl;
+    
+    //program used does not display run time
+}
